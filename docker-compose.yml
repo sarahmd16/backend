@@ -1,42 +1,35 @@
-# Define the name for the stack
-name: backend-api-stack
-
 services:
-  # Backend API service configuration
   backend-api:
-    build: .  # Build the image from the current directory
-    container_name: backend-api  # Name of the container
+    build: .
+    image: backend-api-image
+    container_name: backend-api-container
     environment:
-      - MONGO_URI=mongodb://root:pass-123@mongodb:27017/book-store?authSource=admin  # MongoDB connection URI
-      - PORT=3001  # Port to run the backend API
+      - MONGO_URI=mongodb://root:pass-123@mongodb:27017/book-store?authSource=admin
     ports:
-      - '3001:3001'  # Map the container's port 3001 to the host machine's port 3001
+      - '3001:3001'
     depends_on:
-      - mongodb  # Ensure MongoDB starts before the backend API
+      - mongodb
     networks:
-      - backend-api-network  # Connect the service to the defined network
+      - backend-api-network
 
-  # MongoDB service configuration
   mongodb:
-    container_name: mongodb  # Name of the container
-    image: mongo:latest  # Use the latest MongoDB image from Docker Hub
-    restart: always  # Automatically restart MongoDB container if it stops
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root  # Root username for MongoDB
-      - MONGO_INITDB_ROOT_PASSWORD=pass-123  # Root password for MongoDB
-      - MONGO_INITDB_DATABASE=book-store  # Initial database to create
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass-123
+      - MONGO_INITDB_DATABASE=book-store
     ports:
-      - "27017:27017"  # Map the container's MongoDB port to the host's port 27017
-    volumes:
-      - mongodb-volume:/data/db  # Persist MongoDB data using a Docker volume
+      - '27017:27017'
     networks:
-      - backend-api-network  # Connect the service to the defined network
+      - backend-api-network
+    volumes:
+      - mongodb-volume:/data/db
 
-# Define custom network for the services to communicate with each other
 networks:
   backend-api-network:
-    driver: bridge  # Use the default bridge driver for the network
+    driver: bridge
 
-# Define named volume to persist MongoDB data
 volumes:
   mongodb-volume:
