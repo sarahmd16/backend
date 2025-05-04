@@ -86,9 +86,8 @@ jobs:
               password: ${{ secrets.VPS_PASSWORD }}
               script: |
                   cd /home/user/devops-scripts/api
-                  sudo git reset --hard
-                  sudo git pull origin main
-                  sudo /usr/bin/docker compose pull
+                  sudo git pull 
+                  sudo docker compose pull
                   sudo docker compose up -d --force-recreate --remove-orphans
 
 
