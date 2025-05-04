@@ -45,7 +45,6 @@ jobs:
         - name: Run snyk vulnerabilities Scan
           run: snyk test
 
-
     build-and-push-job:
         runs-on: ubuntu-latest
         needs: test-job
