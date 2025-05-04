@@ -85,11 +85,13 @@ jobs:
               username: ${{ secrets.VPS_USERNAME}}
               password: ${{ secrets.VPS_PASSWORD }}
               script: |
+                  export DOCKER_CLI_PLUGIN_DIR=~/.docker/cli-plugins
+                  export PATH=$DOCKER_CLI_PLUGIN_DIR:$PATH
                   cd /home/user/devops-scripts/api
                   sudo git pull 
-                  sudo docker compose pull
-                  sudo docker compose up -d --force-recreate --remove-orphans
+                  docker compose pull
+                  docker compose up -d --force-recreate --remove-orphans
 
-
+                 
 
         
